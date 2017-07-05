@@ -21,7 +21,16 @@ class Elevator {
   update() {
     this.log();
    }
-  _passengersEnter() { }
+  _passengersEnter() {
+    this.waitingList.map((person,index) =>{
+      if (this.floor === person.originFloor) {
+        this.passengers.push(person);
+        this.waitingList.split(index,1);
+        this.requests.push(person.destinationFloor);
+      }
+    }
+    );
+  }
   _passengersLeave() { }
   floorUp() {
     if (this.floor <10) {
@@ -43,8 +52,11 @@ class Elevator {
 
   }
   call(person) {
-      this.requests.push(person.originFloor);
-      this.waitingList.push(person);
+
+    if (this.passengers.indexOf(person) === -1 ) {
+          this.waitingList.push(person);
+          this.requests.push(person.originFloor);
+    }
 
    }
   log() {
